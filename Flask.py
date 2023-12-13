@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request, jsonify
 import joblib
 import numpy as np
-from werkzeug.exceptions import InternalServerError
 
 app = Flask(__name__)
 
@@ -14,12 +13,10 @@ print(modelo)
 def formulario():
     try:
         print("hola")
-        return render_template('templates/Formulario.html')
-    except Exception as e:
-        print("Fallo 1")
-        return jsonify({'error': str(e)})
-    except InternalServerError as e:
-        abort(500, description=str(e))
+        return render_template('formulario.html')
+    #except Exception as e:
+    #    print("Fallo 1")
+    #    return jsonify({'error': str(e)})
 
 
 @app.route('/inferencia', methods=['POST'])
