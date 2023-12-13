@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify
 import joblib
 import numpy as np
+from werkzeug.exceptions import InternalServerError
 
 app = Flask(__name__)
 
@@ -17,6 +18,8 @@ def formulario():
     except Exception as e:
         print("Fallo 1")
         return jsonify({'error': str(e)})
+    except InternalServerError as e:
+        abort(500, description=str(e))
 
 @app.route('/inferencia', methods=['POST'])
 def realizar_inferencia():
