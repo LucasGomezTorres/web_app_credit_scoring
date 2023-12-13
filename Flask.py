@@ -21,6 +21,7 @@ def formulario():
 @app.route('/inferencia', methods=['POST'])
 def realizar_inferencia():
     try:
+        print("hola2")
         # Datos del formulario
         form_data = request.form.to_dict()
 
@@ -44,9 +45,11 @@ def realizar_inferencia():
         return credit_scoring
     
     except Exception as e:
+        print("error")
         return jsonify({'error': str(e)})
 
 if __name__ == '__main__':
    #app.run(port=8010)
     #port = int(os.environ.get("PORT", 5000))
     app.run()
+    print("corriendo")
