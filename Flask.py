@@ -13,10 +13,10 @@ print(modelo)
 def formulario():
     try:
         print("hola")
-        return render_template('formulario.html')
-    #except Exception as e:
-    #    print("Fallo 1")
-    #    return jsonify({'error': str(e)})
+        return render_template('Formulario.html')
+    except Exception as e:
+        print("Fallo 1")
+        return jsonify({'error': str(e)})
 
 
 @app.route('/inferencia', methods=['POST'])
