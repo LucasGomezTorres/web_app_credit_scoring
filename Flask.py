@@ -7,6 +7,7 @@ app = Flask(__name__)
 # Se carga el modelo de machine learning previamente entrenado
 
 modelo = joblib.load('best_model_dt_2.joblib')
+print(modelo)
 
 @app.route('/') # Index
 def formulario():
