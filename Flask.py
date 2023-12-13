@@ -20,6 +20,7 @@ def formulario():
         return jsonify({'error': str(e)})
     except InternalServerError as e:
         abort(500, description=str(e))
+'''
 
 @app.route('/inferencia', methods=['POST'])
 def realizar_inferencia():
@@ -50,7 +51,7 @@ def realizar_inferencia():
     except Exception as e:
         print("error")
         return jsonify({'error': str(e)})
-
+'''
 if __name__ == '__main__':
    #app.run(port=8010)
     #port = int(os.environ.get("PORT", 5000))
