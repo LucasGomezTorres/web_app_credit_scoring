@@ -3,7 +3,7 @@ import joblib
 import numpy as np
 from werkzeug.exceptions import InternalServerError
 
-app = Flask(__name__,static_url_path='')
+app = Flask(__name__)
 
 # Se carga el modelo de machine learning previamente entrenado
 
