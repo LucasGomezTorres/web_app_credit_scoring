@@ -14,7 +14,7 @@ print(modelo)
 def formulario():
     try:
         print("hola")
-        return render_template('formulario.html')
+        return render_template('templates/Formulario.html')
     except Exception as e:
         print("Fallo 1")
         return jsonify({'error': str(e)})
