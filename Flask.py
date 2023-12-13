@@ -11,7 +11,12 @@ print(modelo)
 
 @app.route('/') # Index
 def formulario():
-    return render_template('formulario.html')
+    try:
+        print("hola")
+        return render_template('formulario.html')
+    except Exception as e:
+        print("Fallo 1")
+        return jsonify({'error': str(e)})
 
 @app.route('/inferencia', methods=['POST'])
 def realizar_inferencia():
