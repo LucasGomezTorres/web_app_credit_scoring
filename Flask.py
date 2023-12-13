@@ -42,4 +42,5 @@ def realizar_inferencia():
 
 if __name__ == '__main__':
    #app.run(port=8010)
-   app.run()
+    port = int(os.environ.get("PORT", 5000))
+    app.run(port=port)
