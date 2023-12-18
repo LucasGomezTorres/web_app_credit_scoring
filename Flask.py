@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 # Se carga el modelo de machine learning previamente entrenado
 
-modelo = joblib.load('best_model_dt_2.joblib')
+modelo = joblib.load('best_model_dt.joblib')
 
 # Se carga el encoder previamente entrenado
 encoder = joblib.load('encoder_train.joblib')
