@@ -1,33 +1,52 @@
 from flask import Flask, render_template, request, jsonify
 import joblib
 import numpy as np
+import pandas as pd
 
 app = Flask(__name__)
 
 # Se carga el modelo de machine learning previamente entrenado
 
-modelo = joblib.load('best_model_dt_2.joblib')
-print(modelo)
+modelo = joblib.load('best_model_rf.joblib')
+
+# Se carga el encoder previamente entrenado
+encoder = joblib.load('encoder_train.joblib')
 
 @app.route('/') # Index
 def formulario():
     try:
-        print("hola")
         return render_template('Formulario.html')
     except Exception as e:
-        print("Fallo 1")
-        return jsonify({'error': str(e)})
 
+        return jsonify({'error': str(e)})
 
 @app.route('/inferencia', methods=['POST'])
 def realizar_inferencia():
     try:
-        print("hola2")
+  
         # Datos del formulario
         form_data = request.form.to_dict()
 
+	# Preparación datos para la inferencia
+        values_inference = pd.DataFrame.from_dict(form_data, orient='index').transpose()
+
+	    # Se aplica el encoder a las variables categóricas
+        categorical_variables = ['Occupation', 'Type_of_Loan','Credit_Mix','Payment_Behaviour','Payment_of_Min_Amount'] 
+
+        values_inference_categorical = values_inference[categorical_variables]
+        
+        # Se aplica el encoder a todas las columnas categóricas a la vez
+        values_inference_categorical_encoded = encoder.transform(values_inference_categorical)  
+
+        # Se reemplaza las columnas categóricas originales con las codificadas
+        values_inference[categorical_variables] = values_inference_categorical_encoded
+
         # Entrada del modelo (datos para hacer inferencia)
-        X_test = np.array(list(form_data.values())).reshape(1, -1)
+        #X_test = np.array(list(form_data.values())).reshape(1, -1)
+
+	    # Entrada del modelo (datos para hacer inferencia)
+        X_test = values_inference.values.reshape(1, -1)
+        X_test = pd.DataFrame(X_test,columns=values_inference.columns)
 
         # Se realiza la inferencia con el modelo
         inference = modelo.predict(X_test)
@@ -50,7 +69,6 @@ def realizar_inferencia():
         return jsonify({'error': str(e)})
 
 if __name__ == '__main__':
-   #app.run(port=8010)
-    #port = int(os.environ.get("PORT", 5000))
+    
     app.run()
     print("corriendo")
